@@ -9,22 +9,9 @@ pipeline {
     GOOD_COMMIT = '98ac319c0cff47b4d39a1a7b61b4e195cfa231e5'
   }
   stages {
-    stage('Checkout Repository') {
+       stage(' check out') {
       steps {
-        // Fetch all branches and commit history so that Jenkins has the complete repository.
-        checkout([
-          $class: 'GitSCM',
-          branches: [[name: 'refs/heads/master']],
-          doGenerateSubmoduleConfigurations: false,
-          extensions: [
-            [$class: 'CloneOption', shallow: false, noTags: false, depth: 0]
-          ],
-          submoduleCfg: [],
-          userRemoteConfigs: [[
-            url: 'https://github.com/pxlin-09/maven-samples-A6.git',
-            refspec: '+refs/heads/*:refs/remotes/origin/*'
-          ]]
-        ])
+        git(url: 'https://github.com/pxlin-09/maven-samples', branch: 'master')
       }
     }
 
