@@ -1,15 +1,7 @@
 pipeline {
   agent any
-  tools { 
-      maven 'DHT_MVN' 
-      jdk 'DHT_SENSE' 
-  }
-  environment {
-    BAD_COMMIT = '198644632661c67b6c32f59e9047c11a70685e15'
-    GOOD_COMMIT = '98ac319c0cff47b4d39a1a7b61b4e195cfa231e5'
-  }
   stages {
-       stage(' check out') {
+    stage(' check out') {
       steps {
         git(url: 'https://github.com/pxlin-09/maven-samples-A6', branch: 'master')
       }
@@ -17,7 +9,7 @@ pipeline {
 
     stage('Prepare Command Script') {
       steps {
-        writeFile file: 'command.sh', text: '''
+        writeFile(file: 'command.sh', text: '''
           #!/bin/bash
           mvn clean test
           status=$?
@@ -26,7 +18,7 @@ pipeline {
           else
             exit 1
           fi
-        '''
+        ''')
         sh 'chmod +x command.sh'
       }
     }
@@ -40,5 +32,14 @@ pipeline {
         '''
       }
     }
+
+  }
+  tools {
+    maven 'DHT_MVN'
+    jdk 'DHT_SENSE'
+  }
+  environment {
+    BAD_COMMIT = '198644632661c67b6c32f59e9047c11a70685e15'
+    GOOD_COMMIT = '98ac319c0cff47b4d39a1a7b61b4e195cfa231e5'
   }
 }
