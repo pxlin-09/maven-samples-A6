@@ -14,7 +14,7 @@ pipeline {
     stage('Checkout Repository') {
       steps {
         // Check out your forked repository.
-        git(url: 'https://github.com/pxlin-09/maven-samples-A6.git', branch: 'master')
+        git(url: 'https://github.com/pxlin-09/maven-samples-A6.git', branch: 'master',shallow: false)
       }
     }
 
